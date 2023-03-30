@@ -64,12 +64,16 @@ api_config::api_config() {
 	}
 	filenames.emplace_back("lsl_api.cfg");
 	filenames.push_back(expand_tilde("~/lsl_api/lsl_api.cfg"));
+   filenames.push_back(expand_tilde("~/Documents/lsl_api.cfg"));
 	filenames.emplace_back("/etc/lsl_api/lsl_api.cfg");
+   
 	for (auto &filename : filenames) {
 		try {
+         LOG_F(INFO, "Trying to load config file %s", filename.c_str());
 			if (file_is_readable(filename)) {
 				// try to load it if the file exists
 				load_from_file(filename);
+            LOG_F(INFO, "Loading config file successful %s", filename.c_str());
 				// successful: finished
 				return;
 			}
